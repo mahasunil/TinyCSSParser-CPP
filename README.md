@@ -83,11 +83,11 @@ div.note
   .main
    max-width: 700px
    margin: 0 auto
-```
 
 @media(min-width:761px)
   p
    color: gray
    font-size: 17px
+```
 
 
