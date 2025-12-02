@@ -25,7 +25,7 @@ The main goal is educational:
 - Extend parser to handle pseudo-classes and pseudo-elements.
 
 ### Sample CSS Input
-   body{
+       body{
             background:gray;
             padding:10px;
         }
@@ -46,29 +46,47 @@ The main goal is educational:
             height:150px;
             padding:10px;
             background:blue;
+             .main{
+                max-width:700px;
+                margin:0 auto;
+            }
+        }
+        @media(min-width:761px){
+              p{
+            color:gray;
+            font-size:17px;
+        }
         }
 
 ### Parser Output:
-Selector: body
-  background: gray
-  padding: 10px
+body
+ background: gray
+ padding: 10px
 
-Selector: h1
-  font-size: 30px
-  color: gray
+h1
+ font-size: 30px
+ color: gray
 
-Selector: p
-  color: black
-  font-size: 20px
+p
+ color: black
+ font-size: 20px
 
-Selector: h2.highlight
-  background: yellow
-  padding: 10px
-  border-radius: 10px
+h2.highlight
+ background: yellow
+ padding: 10px
+ border-radius: 10px
 
-Selector: div.note
-  height: 150px
-  padding: 10px
-  background: blue
+div.note
+ height: 150px
+ padding: 10px
+ background: blue
+  .main
+   max-width: 700px
+   margin: 0 auto
+
+@media(min-width:761px)
+  p
+   color: gray
+   font-size: 17px
 
 
