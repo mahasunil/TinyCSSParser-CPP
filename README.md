@@ -58,6 +58,7 @@ The main goal is educational:
         }
 
 ### Parser Output:
+```text
 body
  background: gray
  padding: 10px
@@ -82,6 +83,7 @@ div.note
   .main
    max-width: 700px
    margin: 0 auto
+```
 
 @media(min-width:761px)
   p
