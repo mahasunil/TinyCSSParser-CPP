@@ -24,13 +24,15 @@ The main goal is educational:
 - Extend parser to handle pseudo-classes and pseudo-elements.
 
 ### Sample CSS Input
-       body{
-            background:gray;
+        body{
+            background:gray;//single line comments
             padding:10px;
         }
         h1{
             font-size:30px;
             color:gray;
+            /*multiline
+            comments*/
         }
         p{
             color:black;
