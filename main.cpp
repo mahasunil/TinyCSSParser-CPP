@@ -4,7 +4,13 @@
 #include <sstream>
 #include <stack>
 
-using namespace std;
+using std::string;
+using std::vector;
+using std::stack;
+using std::move;
+using std::cout;
+using std::endl;
+using std::stringstream;
 
 class Declaration
 {
@@ -22,11 +28,11 @@ public:
     {
         value = val;
     }
-    string getProperty() const
+    const string &getProperty() const
     {
         return property;
     }
-    string getValue() const
+    const string &getValue() const
     {
         return value;
     }
@@ -52,7 +58,7 @@ public:
     {
         nestedRules.push_back(move(r));
     }
-    string getSelector() const
+    const string &getSelector() const
     {
         return selector;
     }
@@ -72,6 +78,39 @@ private:
     vector<Rule> rules;
 
 public:
+    string removeComments(const string &str){
+        string commentErased;
+        commentErased.reserve(str.size());
+
+        bool inComment=false;
+
+        for(size_t i=0; i<str.size(); ++i){
+            if(!inComment && i+1<str.size() && str[i]=='/' && str[i+1]=='*'){
+                inComment=true;
+                ++i;
+                continue;
+            }
+            if(inComment && i+1<str.size() && str[i]=='*' && str[i+1]=='/'){
+                inComment=false;
+                ++i;
+                continue;
+            }
+            if(!inComment && i+1<str.size() && str[i]=='/' && str[i+1]=='/'){
+                i+=2;
+                while(i<str.size() && str[i]!='\n'){
+                    ++i;
+                }
+                inComment=false;
+            }
+
+            if(!inComment){
+                commentErased += str[i];
+            }
+        }
+        return commentErased;
+    }
+
+
     string trim(const string &str)
     {
         size_t first = str.find_first_not_of(" \n\t");
@@ -83,7 +122,8 @@ public:
 
     StyleSheet(const string &cssContents)
     {
-        stringstream ss(cssContents);
+        string commentsRemovedString=removeComments(cssContents);
+        stringstream ss(commentsRemovedString);
         string line;
 
         stack<Rule> stackRules;
@@ -106,7 +146,6 @@ public:
                 stackRules.push(move(newRule));
 
                 buffer = trim(buffer.substr(openCurly + 1));
-                continue;
             }
             else if (closeCurly != string::npos)
             {
@@ -125,7 +164,6 @@ public:
                     }
                 }
                 buffer = trim(buffer.substr(closeCurly + 1));
-                continue;
             }
             else
             {
@@ -138,7 +176,7 @@ public:
                 if (colon != string::npos)
                 {
                     string prop = trim(stmnt.substr(0, colon));
-                    string val = trim(stmnt.substr(colon + 1, stmnt.size() - colon - 2));
+                    string val = trim(stmnt.substr(colon + 1, semi - colon - 1));
 
                     Declaration d;
                     d.addProperty(prop);
@@ -154,7 +192,6 @@ public:
                 }
 
                 buffer = trim(buffer.substr(semi + 1));
-                continue;
             }
         }
 
@@ -194,12 +231,14 @@ int main()
 {
     string cssStyle = R"(
         body{
-            background:gray;
+            background:gray;//single line comments
             padding:10px;
         }
         h1{
             font-size:30px;
             color:gray;
+            /*multiline
+            comments*/
         }
         p{
             color:black;
