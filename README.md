@@ -14,12 +14,12 @@ The main goal is educational:
 ## Features
 - Parse CSS selectors and their declarations.
 - Support for nested rules and media queries.
+- Support for CSS comments and ignoring them during parsing.
 - Store parsed data in C++ objects ('Rule' and 'Declaration').
 - Print the parsed structure in a human-readable format.
 - Uses modern C++ 'move semantics' for efficiency.
 
 ## Planned Features
-- Support for CSS comments and ignoring them during parsing.
 - Error handling for malformed CSS.
 - Extend parser to handle pseudo-classes and pseudo-elements.
 
